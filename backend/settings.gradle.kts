@@ -1,1 +1,1 @@
-rootProject.name = "mockcoin"
+rootProject.name = "mockstock"
