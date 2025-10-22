@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active:
+      - local
+#  jackson:
+#    property-naming-strategy: LOWER_CAMEL_CASE
+
+upbit-config:
+  base-url: https://api.upbit.com

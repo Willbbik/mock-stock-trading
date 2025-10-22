@@ -1,0 +1,37 @@
+{
+  "name": "mysql-source-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+    "tasks.max": "1",
+    "database.hostname": "host.docker.internal",
+    "database.port": "3306",
+    "database.user": "market_user",
+    "database.password": "market_user123",
+    "database.server.id": "184057",
+    "database.server.name": "mysqlserver",
+    "database.include.list": "test1",
+    "table.include.list": "test1.TB_MARKET_ORDER,test1.TB_COIN_TRADE_HIST",
+    "database.connectionTimeZone": "Asia/Seoul",
+
+    "topic.prefix": "mysqlserver",
+    "snapshot.mode": "initial",
+    "include.schema.changes": "false",
+
+    "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
+    "schema.history.internal.kafka.topic": "schema-changes.test1",
+
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false",
+
+    "transforms": "unwrap,extractKey",
+    "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+    "transforms.unwrap.drop.tombstones": "true",
+    "transforms.unwrap.delete.handling.mode": "rewrite",
+    "transforms.extractKey.type": "org.apache.kafka.connect.transforms.ExtractField$Key",
+    "transforms.extractKey.field": "id",
+
+    "errors.tolerance": "all",
+    "errors.log.enable": "true"
+  }
+}

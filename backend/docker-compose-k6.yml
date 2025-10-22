@@ -1,0 +1,22 @@
+# 실행 방법
+# docker compose -f docker-compose-k6.yml up -d
+
+# k6 web dashboard
+# localhost:5665
+
+name: mockcoin-k6-load-test
+
+services:
+  k6:
+    image: grafana/k6:latest
+    container_name: k6
+    ports:
+      - "5665:5665"
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./load-tests:/load-tests
+    environment:
+      - K6_WEB_DASHBOARD=true
+#      - K6_SUMMARY_EXPORT=./load-tests/export.json
+    command: run /load-tests/list-script.js

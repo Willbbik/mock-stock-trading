@@ -1,0 +1,33 @@
+{
+  "name": "es-sink-connector",
+  "config": {
+    "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
+    "tasks.max": "1",
+
+    "topics": "mysqlserver.test1.TB_MARKET_ORDER,mysqlserver.test1.TB_COIN_TRADE_HIST",
+    "connection.url": "http://elasticsearch:9200",
+
+    "type.name": "_doc",
+    "key.ignore": "false",
+    "schema.ignore": "true",
+    "write.method": "upsert",
+    "behavior.on.null.values": "DELETE",
+
+    "topic.index.map": "mysqlserver.test1.TB_MARKET_ORDER:tb_market_order,mysqlserver.test1.TB_COIN_TRADE_HIST:tb_coin_trade_hist",
+
+    "max.in.flight.requests": "5",
+    "batch.size": "2000",
+    "max.buffered.records": "10000",
+    "linger.ms": "200",
+
+    "errors.tolerance": "all",
+    "errors.log.enable": "true",
+    "errors.deadletterqueue.topic.name": "es-dlq",
+    "errors.deadletterqueue.context.headers.enable": "true",
+    "errors.deadletterqueue.topic.replication.factor": "1",
+
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false"
+  }
+}
