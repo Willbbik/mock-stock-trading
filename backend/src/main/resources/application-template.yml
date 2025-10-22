@@ -4,9 +4,9 @@ spring:
       on-profile: local
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test1
-    username: market_user
-    password: market_user123
+    url: jdbc:mysql://localhost:3306/db
+    username: a
+    password: a
   data:
     redis:
       host: localhost
