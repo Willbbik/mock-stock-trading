@@ -28,7 +28,9 @@ const ListCoin = () => {
             params: param
         })
 
-        setMarkets(res.data)
+        if(res.status === 200 && res.data) {
+            setMarkets(res.data)
+        }
     }
 
     // 웹소켓으로 받아온 정보 업데이트
@@ -102,7 +104,7 @@ const ListCoin = () => {
                     </thead>
                     <tbody>
                         {
-                            markets.map((market) => (
+                            markets?.map((market) => (
                                 <tr key={market.market}>
                                     <td className="market-btn">
                                         <a 

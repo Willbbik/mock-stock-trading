@@ -63,11 +63,11 @@ const MainCoin = () => {
                     <div>
                         <ul>
                             {
-                                top3Coins.map((coin, index) => (
-                                    <li key={coin.market}>
-                                        {index + 1}. {coin.market} ({coin.count}회 매수)
-                                    </li>
-                                ))
+                                // top3Coins?.map((coin, index) => (
+                                //     <li key={coin.market}>
+                                //         {index + 1}. {coin.market} ({coin.count}회 매수)
+                                //     </li>
+                                // ))
                             }
                         </ul>
                     </div>
