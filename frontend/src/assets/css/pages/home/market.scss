@@ -1,0 +1,180 @@
+.home-container {
+
+    min-width: 100%;
+    min-height: 100vh;
+    gap: 12px;
+
+    .chart-container {
+        background-color: #fff;
+        width: 70%;
+
+        // 코인 차트 영역
+        &__chart {
+            border: 1px solid black;
+            height: 70%;
+        }
+
+        // 거래 영역
+        &__trade {
+            border: 1px solid black;
+            height: 30%;
+            display: flex;
+            flex-direction: column;
+
+            // 탭 영역 (매수, 매도)
+            .tab-box {
+                display: flex;
+                justify-content: center;            
+                border: 1px solid #D5D6DC;
+    
+                button {
+                    background: #fff;
+                    border: none;
+                    padding: 12px 16px;
+                    font-size: 15px;
+                    color: #555;
+                    cursor: pointer;
+                    transition: color 0.2s ease;
+    
+                    &:hover {
+                        color: #1e90ff;
+                    }
+    
+                    &.active {
+                        color: #1e90ff;
+                        border-bottom: #555;
+                    }
+                }
+            }
+
+            // 가격 및 정보 입력 영역
+            .trade-box {
+                // display: flex;
+                // flex-direction: column;
+
+                .trade-input {
+                    display: flex;
+                    align-items: center;
+
+                    .title {
+                        width: 150px;
+                        padding: 12px 16px;
+                        margin-right: 20px;
+                        font-size: 17px;
+                        font-weight: 600;
+                    }
+    
+                    input {
+                        width: 250px;
+                        text-align: center;
+                        border: 1px solid rgb(51, 51, 51);
+                        outline: none;
+                        font-size: 16px;
+                        padding: 10px 12px;
+                        color: #222;
+                        background: transparent;
+                        border-radius: 3px;
+    
+                        &:focus {
+                            outline: none;
+                            border: 1px solid #0162DF;
+                        }
+                    }
+                }
+            }
+
+            // 버튼 영역
+            .decide-box {
+                margin-top: auto;
+
+                .btn {
+                    
+                    button {
+                        width: 100%;
+                        border: none;
+                        background-color: #DD3C44;
+                        padding: 12px 16px;
+                        font-size: 17px;
+                        color: white;
+                        cursor: pointer;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+
+                        &:disabled {
+                            background-color: #ccc;
+                            cursor: not-allowed;
+                            opacity: 0.7;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .market-container {
+        background-color: #fff;
+        width: 30%;
+
+        // 화폐 선택 탭 영역
+        &__tabs {
+            display: flex;
+            justify-content: center;            
+            border: 1px solid #D5D6DC;
+
+            &__button {
+                background: #fff;
+                border: none;
+                padding: 12px 16px;
+                font-size: 15px;
+                color: #555;
+                cursor: pointer;
+                transition: color 0.2s ease;
+
+                &:hover {
+                    color: #1e90ff;
+                }
+
+                &.active {
+                    color: #1e90ff;
+                    border-bottom: #555;
+                }
+
+            }
+        }
+
+        // 코인 목록 노출 영역
+        &__table {
+            width: 100%;
+
+            thead {
+                th {
+                    padding: 10px;
+                }
+            }
+
+            tbody {
+
+                td {
+                    max-width: 150px;
+                    padding: 2px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+
+                    a {
+                        color: inherit;
+                        text-decoration: none;
+                        cursor: pointer;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}

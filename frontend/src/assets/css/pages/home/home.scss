@@ -1,0 +1,56 @@
+.home-container {
+    display: flex;
+    justify-content: center;
+    max-width: 1240px;
+    margin: 0 auto;
+
+    .main-wrapper {
+        width: 75%;
+
+        .main-area {
+            height: 400px;
+            margin: 1rem;
+            border: 1px solid red;
+            background-color: red;
+        }
+
+        .sub-area {
+            height: 400px;
+            margin: 1rem;
+            border: 1px solid green;
+            background-color: green;
+        }
+    }
+
+    .coin-wrapper {
+        width: 25%;
+        margin: 1rem;
+        border: 1px solid blue;
+        display: flex;
+        flex-direction: column;
+
+        .select-area {
+
+            .select-box {
+                height: 100%;
+                display: flex;
+                border: 1px solid black;
+
+                .select-item {
+                    height: 54px;
+                    flex-grow: 1;
+                    margin: 0.5rem;
+                    text-align: center;
+
+                    a {
+                        
+                    }
+                }
+            }
+        }
+
+        .coin-list-area {
+
+        }
+    }
+}
