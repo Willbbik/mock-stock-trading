@@ -1,6 +1,6 @@
 package com.min.mockstock.domain.coin.repository
 
-import com.min.mockstock.domain.coin.CoinTradeHist
+import com.min.mockstock.domain.coin.model.CoinTradeHist
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface CoinTradeHistRepository : JpaRepository<CoinTradeHist, Long> {
