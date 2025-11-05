@@ -1,32 +1,47 @@
 package com.min.mockstock.infrastructure.websocket
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.min.mockstock.domain.trade.model.Stocks
+import com.min.mockstock.infra.properties.KoreaTradeProperties
+import com.min.mockstock.infra.redis.RedisStringService
 import com.min.mockstock.infra.websocket.dto.KoreaTradeWebSocketRequest
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import org.slf4j.LoggerFactory
+import org.springframework.cache.CacheManager
 import org.springframework.kafka.core.KafkaTemplate
+import org.springframework.stereotype.Component
 
+@Component
 class KoreaTradeWebSocketListener(
     private val objectMapper: ObjectMapper,
-    private val properties: KoreaTradeWebSocketProperties
+    private val koreaTradeProperties: KoreaTradeProperties,
+    private val redisStringService: RedisStringService
+//    private val properties: KoreaTradeWebSocketProperties
 ) : WebSocketListener() {
 
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     override fun onOpen(webSocket: WebSocket, response: Response) {
-        logger.info("WebSocket connection opened")
+        logger.info("Korea Trade WebSocket connection opened")
 
-        val request = createSubscribeMessage("005930") // TODO: Make stock code configurable
-        webSocket.send(request)
-        logger.info("Sent subscription message")
+        Stocks.list.forEachIndexed { index, it ->
+            webSocket.send(createSubscribeMessage(it.code))
+            logger.info("Sent subscription message ${index + 1}")
+        }
+
+//        Stocks.list.forEach {
+//            webSocket.send(createSubscribeMessage(it.code))
+//        }
+//
+//        logger.info("Sent subscription message")
     }
 
     override fun onMessage(webSocket: WebSocket, bytes: okio.ByteString) {
         try {
             val message = bytes.utf8()
-            logger.debug("Received message: $message")
+            logger.info("Received message: $message")
             // TODO: Process the message and send to Kafka
             // val ticker = objectMapper.readValue(message, YourTickerClass::class.java)
             // kafkaTemplate.send("your-topic", objectMapper.writeValueAsString(ticker))
@@ -41,20 +56,23 @@ class KoreaTradeWebSocketListener(
     }
 
     private fun createSubscribeMessage(stockCode: String): String {
+        val approvalKey = redisStringService.get("approvalKey") ?: ""
+
         val request = KoreaTradeWebSocketRequest(
             header = KoreaTradeWebSocketRequest.Header(
-                approval_key = properties.approvalKey,
-                custtype = properties.custType,
-                tr_type = properties.trType,
-                content_type = properties.contentType
+                approval_key = approvalKey,
+                custtype = "P",
+                tr_type = "1",
+                content_type = "utf-8"
             ),
             body = KoreaTradeWebSocketRequest.Body(
                 input = KoreaTradeWebSocketRequest.Input(
-                    tr_id = properties.trId,
+                    tr_id = "H0STCNT0",
                     tr_key = stockCode
                 )
             )
         )
+
         return objectMapper.writeValueAsString(request)
     }
 }

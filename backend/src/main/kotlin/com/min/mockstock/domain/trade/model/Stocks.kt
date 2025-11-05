@@ -4,6 +4,7 @@ object Stocks {
 
     val list: List<Stock> = listOf(
         Stock("삼성전자", "005930"),
+        Stock("삼성중공업", "010140"),
         Stock("SK하이닉스", "000660"),
         Stock("삼성전자우", "005935"),
         Stock("LG에너지솔루션", "373220"),
@@ -32,8 +33,7 @@ object Stocks {
         Stock("아모레퍼시픽", "090430"),
         Stock("SK텔레콤", "017670"),
         Stock("KT", "030200"),
-        Stock("한미반도체", "042700"),
-        Stock("에코프로머티리얼즈", "450080")
+        Stock("한미반도체", "042700")
     )
 
 }
