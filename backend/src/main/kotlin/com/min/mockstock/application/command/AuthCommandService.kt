@@ -2,8 +2,8 @@ package com.min.mockstock.application.command
 
 import com.min.mockstock.common.util.Base64Utils
 import com.min.mockstock.domain.user.model.User
-import com.min.mockstock.api.dto.request.auth.loginRequest
-import com.min.mockstock.api.dto.request.auth.signupRequest
+import com.min.mockstock.api.dto.request.auth.LoginRequest
+import com.min.mockstock.api.dto.request.auth.SignupRequest
 import com.min.mockstock.domain.user.repository.UserRepository
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
@@ -16,7 +16,7 @@ class AuthCommandService(
 ) {
 
     @Transactional
-    fun signup(param: signupRequest) {
+    fun signup(param: SignupRequest) {
         userRepository.findByLoginId(param.loginId).ifPresent {
             throw IllegalArgumentException("Login ID already exists")
         }
@@ -33,7 +33,7 @@ class AuthCommandService(
     }
 
     @Transactional
-    fun login(param: loginRequest): User {
+    fun login(param: LoginRequest): User {
         val user = userRepository.findByLoginId(param.loginId)
             .orElseThrow { IllegalArgumentException("Invalid login ID or password") }
 

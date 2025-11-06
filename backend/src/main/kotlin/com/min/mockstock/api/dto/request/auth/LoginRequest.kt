@@ -2,7 +2,7 @@ package com.min.mockstock.api.dto.request.auth
 
 import org.jetbrains.annotations.NotNull
 
-data class loginRequest(
+data class LoginRequest(
         @field:NotNull
         val loginId: String,
 

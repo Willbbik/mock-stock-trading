@@ -1,9 +1,9 @@
 package com.min.mockstock.user
 
-import com.min.mockstock.domain.user.User
-import com.min.mockstock.domain.user.dto.RegisterUserDTO
-import com.min.mockstock.domain.user.repository.UserRepository
+import com.min.mockstock.api.dto.request.auth.SignupRequest
 import com.min.mockstock.application.command.AuthCommandService
+import com.min.mockstock.domain.user.model.User
+import com.min.mockstock.domain.user.repository.UserRepository
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
@@ -29,7 +29,7 @@ class AuthCommandServiceTest {
     @Test
     fun `중복된 아이디로 회원가입 시도 시 에러 발생`() {
 
-        val registerUserDTO = RegisterUserDTO(
+        val registerUserDTO = SignupRequest(
                 loginId = "testUser",
                 password = "testUser",
                 name = "Test User",
@@ -46,7 +46,7 @@ class AuthCommandServiceTest {
         `when`(userRepository.findByLoginId("testUser")).thenReturn(Optional.of(user))
 
         assertThrows<IllegalArgumentException> {
-            authService.registerUser(registerUserDTO)
+            authService.signup(registerUserDTO)
         }
 
         // verify

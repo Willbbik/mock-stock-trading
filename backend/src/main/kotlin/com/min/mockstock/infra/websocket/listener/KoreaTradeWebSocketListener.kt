@@ -9,16 +9,13 @@ import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import org.slf4j.LoggerFactory
-import org.springframework.cache.CacheManager
-import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Component
 
 @Component
 class KoreaTradeWebSocketListener(
     private val objectMapper: ObjectMapper,
-    private val koreaTradeProperties: KoreaTradeProperties,
-    private val redisStringService: RedisStringService
-//    private val properties: KoreaTradeWebSocketProperties
+    private val redisStringService: RedisStringService,
+    private val koreaTradeProperties: KoreaTradeProperties
 ) : WebSocketListener() {
 
     private val logger = LoggerFactory.getLogger(this::class.java)
@@ -27,24 +24,15 @@ class KoreaTradeWebSocketListener(
         logger.info("Korea Trade WebSocket connection opened")
 
         Stocks.list.forEachIndexed { index, it ->
-            webSocket.send(createSubscribeMessage(it.code))
-            logger.info("Sent subscription message ${index + 1}")
+            val response = webSocket.send(createSubscribeMessage(it.code))
+            logger.info("Sent subscription message ${index + 1}, result = $response")
         }
-
-//        Stocks.list.forEach {
-//            webSocket.send(createSubscribeMessage(it.code))
-//        }
-//
-//        logger.info("Sent subscription message")
     }
 
     override fun onMessage(webSocket: WebSocket, bytes: okio.ByteString) {
         try {
             val message = bytes.utf8()
             logger.info("Received message: $message")
-            // TODO: Process the message and send to Kafka
-            // val ticker = objectMapper.readValue(message, YourTickerClass::class.java)
-            // kafkaTemplate.send("your-topic", objectMapper.writeValueAsString(ticker))
         } catch (e: Exception) {
             logger.error("Error processing WebSocket message", e)
         }
@@ -52,7 +40,14 @@ class KoreaTradeWebSocketListener(
 
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
         logger.error("WebSocket connection failed: ${t.message}", t)
-        // TODO: Implement reconnection logic
+    }
+
+    override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
+        logger.info("WebSocket connection closing: $code - $reason")
+    }
+
+    override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
+        logger.info("WebSocket connection closed: $code - $reason")
     }
 
     private fun createSubscribeMessage(stockCode: String): String {
@@ -60,10 +55,12 @@ class KoreaTradeWebSocketListener(
 
         val request = KoreaTradeWebSocketRequest(
             header = KoreaTradeWebSocketRequest.Header(
-                approval_key = approvalKey,
+//                approval_key = approvalKey,
+                appkey = koreaTradeProperties.realAppKey,
+                appsecret = koreaTradeProperties.realAppSecret,
                 custtype = "P",
                 tr_type = "1",
-                content_type = "utf-8"
+                content_type = "utf-8",
             ),
             body = KoreaTradeWebSocketRequest.Body(
                 input = KoreaTradeWebSocketRequest.Input(

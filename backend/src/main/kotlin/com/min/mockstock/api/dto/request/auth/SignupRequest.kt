@@ -2,7 +2,7 @@ package com.min.mockstock.api.dto.request.auth
 
 import jakarta.validation.constraints.NotBlank
 
-data class signupRequest(
+data class SignupRequest(
 
         @field:NotBlank
         val loginId: String,
