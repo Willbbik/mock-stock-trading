@@ -3,18 +3,17 @@ package com.min.mockstock.infrastructure.websocket
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.min.mockstock.domain.trade.model.Stocks
 import com.min.mockstock.infra.properties.KoreaTradeProperties
-import com.min.mockstock.infra.redis.RedisStringService
 import com.min.mockstock.infra.websocket.dto.KoreaTradeWebSocketRequest
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
+import kotlin.math.log
 
 @Component
 class KoreaTradeWebSocketListener(
     private val objectMapper: ObjectMapper,
-    private val redisStringService: RedisStringService,
     private val koreaTradeProperties: KoreaTradeProperties
 ) : WebSocketListener() {
 
@@ -24,8 +23,9 @@ class KoreaTradeWebSocketListener(
         logger.info("Korea Trade WebSocket connection opened")
 
         Stocks.list.forEachIndexed { index, it ->
-            val response = webSocket.send(createSubscribeMessage(it.code))
-            logger.info("Sent subscription message ${index + 1}, result = $response")
+            val message = createSubscribeMessage(it.code)
+            val sendResult = webSocket.send(message)
+            logger.info("Sent subscription message ${index + 1}, code = ${it.code}, send result = $sendResult, result = $response")
         }
     }
 
@@ -51,11 +51,8 @@ class KoreaTradeWebSocketListener(
     }
 
     private fun createSubscribeMessage(stockCode: String): String {
-        val approvalKey = redisStringService.get("approvalKey") ?: ""
-
         val request = KoreaTradeWebSocketRequest(
             header = KoreaTradeWebSocketRequest.Header(
-//                approval_key = approvalKey,
                 appkey = koreaTradeProperties.realAppKey,
                 appsecret = koreaTradeProperties.realAppSecret,
                 custtype = "P",
