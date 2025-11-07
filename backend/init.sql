@@ -5,7 +5,7 @@ CREATE TABLE `users` (
                          `name` varchar(255) NOT NULL COMMENT '이름',
                          `email` varchar(255) NOT NULL COMMENT '이메일',
                          `created_at` timestamp
-);
+) COMMENT = '사용자';
 
 CREATE TABLE `user_account` (
                                 `account_id` bigint PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT '계좌 ID',
@@ -14,7 +14,7 @@ CREATE TABLE `user_account` (
                                 `deposit_cash` decimal NOT NULL COMMENT '현금',
                                 `is_active` boolean NOT NULL COMMENT '계좌 활성화 여부',
                                 `created_at` timestamp
-);
+) COMMENT = '사용자 계좌';
 
 CREATE TABLE `user_holding` (
                                 `holding_id` bigint PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT '주식 보유 현황 ID',
@@ -24,7 +24,7 @@ CREATE TABLE `user_holding` (
                                 `average_purchase_cost` decimal NOT NULL COMMENT '평균 매수 금액',
                                 `reserved_sell_qty` decimal NOT NULL COMMENT '매도 주문 대기 수량',
                                 `created_at` timestamp
-);
+) COMMENT = '사용자 주식 보유 현황';
 
 CREATE TABLE `stock_order` (
                                `order_id` bigint PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT '주문 ID',
@@ -36,7 +36,7 @@ CREATE TABLE `stock_order` (
                                `quantity` decimal NOT NULL COMMENT '주문 수량',
                                `filled_quantity` decimal NOT NULL COMMENT '체결된 주문 수량',
                                `created_at` timestamp
-);
+) COMMENT = '주문 관리';
 
 CREATE TABLE `trade_history` (
                                  `trade_id` bigint PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT '거래 기록 ID',
@@ -45,17 +45,7 @@ CREATE TABLE `trade_history` (
                                  `price` decimal NOT NULL COMMENT '실제 체결된 가격',
                                  `quantity` decimal NOT NULL COMMENT '체결 주문 수량',
                                  `created_at` timestamp
-);
-
-ALTER TABLE `users` COMMENT = '사용자';
-
-ALTER TABLE `user_account` COMMENT = '사용자 계좌';
-
-ALTER TABLE `user_holding` COMMENT = '사용자 주식 보유 현황';
-
-ALTER TABLE `stock_order` COMMENT = '주문 관리';
-
-ALTER TABLE `trade_history` COMMENT = '거래 체결 기록';
+) COMMENT = '거래 체결 기록';
 
 ALTER TABLE `user_account` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 

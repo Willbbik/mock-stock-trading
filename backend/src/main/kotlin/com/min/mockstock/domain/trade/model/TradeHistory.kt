@@ -4,25 +4,26 @@ import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "trade_history")
-data class TradeHistory(
+@Table(name = "trade_history") // 거래 체결 기록
+data class TradeHistory (
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "trade_id") // 거래 기록 ID
     val tradeId: Long = 0,
 
-    @Column(nullable = false)
+    @Column(name = "order_id", nullable = false) // 주문 ID
     val orderId: Long,
 
-    @Column(nullable = false)
+    @Column(name = "symbol", nullable = false) // 종목 코드
     val symbol: String,
 
-    @Column(nullable = false)
+    @Column(name = "price", nullable = false) // 실제 체결된 가격
     val price: Double,
 
-    @Column(nullable = false)
+    @Column(name = "quantity", nullable = false) // 체결 주문 수량
     val quantity: Double,
 
-    @Column(insertable = false, updatable = false)
+    @Column(name = "created_at", insertable = false, updatable = false) // 생성일시
     val createdAt: LocalDateTime? = null
 )

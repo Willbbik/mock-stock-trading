@@ -43,7 +43,7 @@ dependencies {
 //	implementation("org.slf4j:slf4j-api:2.0.17")
 
 	compileOnly("org.projectlombok:lombok")
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
+//	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("com.mysql:mysql-connector-j")
 
 	annotationProcessor("org.projectlombok:lombok")

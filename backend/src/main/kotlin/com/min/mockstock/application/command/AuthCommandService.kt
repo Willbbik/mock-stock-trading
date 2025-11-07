@@ -4,6 +4,7 @@ import com.min.mockstock.common.util.Base64Utils
 import com.min.mockstock.domain.user.model.User
 import com.min.mockstock.api.dto.request.auth.LoginRequest
 import com.min.mockstock.api.dto.request.auth.SignupRequest
+import com.min.mockstock.application.event.UserSignupEvent
 import com.min.mockstock.domain.user.repository.UserRepository
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
@@ -29,7 +30,7 @@ class AuthCommandService(
         )
 
         userRepository.save(user)
-//        eventPublisher.publishEvent(UserRegisteredEvent(user.id, user.loginId))
+        eventPublisher.publishEvent(UserSignupEvent(user.id, user.loginId))
     }
 
     @Transactional

@@ -9,7 +9,6 @@ import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
-import kotlin.math.log
 
 @Component
 class KoreaTradeWebSocketListener(
@@ -34,12 +33,12 @@ class KoreaTradeWebSocketListener(
             val message = bytes.utf8()
             logger.info("Received message: $message")
         } catch (e: Exception) {
-            logger.error("Error processing WebSocket message", e)
+            logger.info("Error processing WebSocket message", e)
         }
     }
 
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-        logger.error("WebSocket connection failed: ${t.message}", t)
+        logger.info("WebSocket connection failed: ${t.message}", t)
     }
 
     override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {

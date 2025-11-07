@@ -11,8 +11,15 @@ class TradeController(
         private val upbitService: UpbitService
 ) { 
 
-    @GetMapping("/api/trade/markets")
-    fun getMarkets(request: MarketInfoRequest): List<UpbeatTickerInfo>? {
-        return upbitService.getMarkets(request)
-    }
+
+
+
+
+//    @GetMapping("/api/trade/markets")
+//    fun getMarkets(request: MarketInfoRequest): List<UpbeatTickerInfo>? {
+//        return upbitService.getMarkets(request)
+//    }
+
+
+
 }
