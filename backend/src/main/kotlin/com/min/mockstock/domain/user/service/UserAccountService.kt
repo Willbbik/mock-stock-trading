@@ -10,15 +10,15 @@ class UserAccountService(
     private val userAccountProperties: UserAccountProperties
 ) {
 
-    // 새로운 사용자 계좌 생성
-    fun createNewAccount(userId: String?) : UserAccount{
+    // 사용자 계좌 신규 생성
+    fun createNewAccount(userId: String) : UserAccount{
 
         val defaultMoney = userAccountProperties.defaultBalance // 초기 자본금 설정
         val accountNumber = createAccountNumber()
 
         // 사용자 계좌 생성
         return UserAccount(
-            userId = userId ?:"",
+            userId = userId,
             accountNumber = accountNumber,
             totalAsset = defaultMoney,
             depositCash = defaultMoney

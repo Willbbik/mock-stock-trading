@@ -33,7 +33,16 @@ object Stocks {
         StockInfo("아모레퍼시픽", "090430"),
         StockInfo("SK텔레콤", "017670"),
         StockInfo("KT", "030200"),
-        StockInfo("한미반도체", "042700")
+        StockInfo("한미반도체", "042700"),
+        StockInfo("HLB", "028300"),
+        StockInfo("에코프로", "086520"),
+        StockInfo("에코프로비엠", "247540"),
+        StockInfo("카나리아바이오", "016790"),
+        StockInfo("셀트리온", "068270"),
+        StockInfo("한화솔루션", "009830"),
+        StockInfo("HLB생명과학", "067630"),
+        StockInfo("롯데정보통신", "286940"),
+        StockInfo("코스모신소재", "005070")
     )
 
     fun isContain(stockCode: String): Boolean {

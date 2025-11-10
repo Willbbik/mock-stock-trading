@@ -19,7 +19,8 @@ class UserSignupListener(
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
     fun handleEvent(event: UserSignupEvent) {
         // 새로운 사용자 계좌 생성 및 저장
-        userAccountService.createNewAccount(event.userId).let { userAccountRepository.save(it) }
+        val userAccount = userAccountService.createNewAccount(event.userId)
+        userAccountRepository.save(userAccount)
     }
 
 
