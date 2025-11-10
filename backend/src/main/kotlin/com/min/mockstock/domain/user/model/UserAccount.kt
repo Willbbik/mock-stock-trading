@@ -1,29 +1,47 @@
 package com.min.mockstock.domain.user.model
 
+import com.min.mockstock.domain.shared.CustomId
 import jakarta.persistence.*
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "user_account") // 사용자 주식 계좌
-data class UserAccount (
+@Table(name = "user_account")
+class UserAccount(
+    userId: String,
+    accountNumber: String,
+    totalAsset: BigDecimal,
+    depositCash: BigDecimal
+) {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "account_id") // 계좌 ID
-    val accountId: Long = 0,
+    @CustomId
+    @Column(name = "account_id")
+    lateinit var accountId: String
+        protected set
 
-    @Column(name = "user_id", nullable = false) // 사용자 ID
-    val userId: Long,
+    @Column(name = "user_id", nullable = false)
+    var userId: String = userId
+        protected set
 
-    @Column(name = "total_asset", nullable = false) // 총 자산 (현금 + 주식 평가액)
-    val totalAsset: Double = 0.0,
+    @Column(name = "account_number", nullable = false)
+    var accountNumber: String = accountNumber
+        protected set
 
-    @Column(name = "deposit_cash", nullable = false) // 현금
-    val depositCash: Double = 0.0,
+    @Column(name = "total_asset", nullable = false)
+    var totalAsset: BigDecimal = totalAsset
+        protected set
 
-    @Column(name = "is_active", nullable = false) // 계좌 활성화 여부
-    val isActive: Boolean = true,
+    @Column(name = "deposit_cash", nullable = false)
+    var depositCash: BigDecimal = depositCash
+        protected set
 
-    @Column(name = "created_at", insertable = false, updatable = false) // 생성일시
-    val createdAt: LocalDateTime? = null
-)
+    @Column(name = "is_active", nullable = false)
+    var isActive: Boolean = true
+        protected set
+
+    @Column(name = "created_at", nullable = false)
+    var createdAt: LocalDateTime = LocalDateTime.now()
+        protected set
+
+}

@@ -1,28 +1,41 @@
 package com.min.mockstock.domain.user.model
 
+import com.min.mockstock.domain.shared.CustomId
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
 @Table(name = "users")
-data class User (
+class User(
+    loginId: String,
+    password: String,
+    name: String,
+    email: String
+) {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
+    @CustomId
+    @Column(name = "id")
+    lateinit var userId: String
+        protected set
 
-    @Column(nullable = false)
-    val loginId: String,
+    @Column(name = "login_id", nullable = false)
+    var loginId: String = loginId
+        protected set
 
-    @Column(nullable = false)
-    val password: String,
+    @Column(name = "password", nullable = false)
+    var password: String = password
+        protected set
 
-    @Column(nullable = false)
-    val name: String,
+    @Column(name = "name", nullable = false)
+    var name: String = name
+        protected set
 
-    @Column(nullable = false)
-    val email: String,
+    @Column(name = "email", nullable = false)
+    var email: String = email
+        protected set
 
-    @Column(insertable = false, updatable = false)
-    val createdAt: LocalDateTime? = null
-)
+    @Column(name = "created_at", nullable = false)
+    var createdAt: LocalDateTime = LocalDateTime.now()
+        protected set
+}

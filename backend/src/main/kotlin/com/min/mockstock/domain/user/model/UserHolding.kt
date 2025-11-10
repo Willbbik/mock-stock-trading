@@ -1,32 +1,37 @@
 package com.min.mockstock.domain.user.model
 
+import com.min.mockstock.domain.shared.CustomId
 import jakarta.persistence.*
-import java.time.LocalDateTime
+import java.math.BigDecimal
 
 @Entity
-@Table(name = "user_holding")   // 사용자 주식 보유 현황
-data class UserHolding (
+@Table(name = "user_holding")
+class UserHolding(
+    userId: String,
+    stockCode: String,
+    quantity: Int,
+    averagePrice: BigDecimal
+) {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "holding_id") // 주식 보유 현황 ID
-    val holdingId: Long = 0,
+    @CustomId
+    @Column(name = "holding_id")
+    lateinit var holdingId: String
+        protected set
 
-    @Column(name = "account_id", nullable = false) // 계좌 ID
-    val accountId: Long,
+    @Column(name = "user_id", nullable = false)
+    var userId: String = userId
+        protected set
 
-    @Column(name = "symbol", nullable = false) // 종목 코드
-    val symbol: String,
+    @Column(name = "stock_code", nullable = false)
+    var stockCode: String = stockCode
+        protected set
 
-    @Column(name = "quantity", nullable = false) // 보유 수량
-    val quantity: Double,
+    @Column(name = "quantity", nullable = false)
+    var quantity: Int = quantity
+        protected set
 
-    @Column(name = "average_purchase_cost", nullable = false) // 평균 매수 금액
-    val averagePurchaseCost: Double,
-
-    @Column(name = "reserved_sell_qty", nullable = false) // 매도 주문 대기 수량
-    val reservedSellQty: Double,
-
-    @Column(name = "created_at", insertable = false, updatable = false) // 생성일시
-    val createdAt: LocalDateTime? = null
-)
+    @Column(name = "average_price", nullable = false)
+    var averagePrice: BigDecimal = averagePrice
+        protected set
+}

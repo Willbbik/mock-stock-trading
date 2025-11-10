@@ -1,9 +1,9 @@
 plugins {
 	kotlin("jvm") version "1.9.25"
 	kotlin("plugin.spring") version "1.9.25"
+	kotlin("plugin.jpa") version "1.9.25"
 	id("org.springframework.boot") version "3.4.5"
 	id("io.spring.dependency-management") version "1.1.7"
-	kotlin("plugin.jpa") version "1.9.25"
 }
 
 group = "com.min"
@@ -34,6 +34,7 @@ dependencies {
 	implementation ("org.springframework.boot:spring-boot-starter-websocket")
 	implementation("com.squareup.okhttp3:okhttp:4.12.0")
 	implementation("com.google.code.gson:gson:2.13.1")
+	implementation("com.github.f4b6a3:ulid-creator:5.2.3")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")

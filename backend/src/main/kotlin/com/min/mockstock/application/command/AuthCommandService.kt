@@ -30,7 +30,7 @@ class AuthCommandService(
         )
 
         userRepository.save(user)
-        eventPublisher.publishEvent(UserSignupEvent(user.id, user.loginId))
+        eventPublisher.publishEvent(UserSignupEvent(user.userId, user.loginId))
     }
 
     @Transactional

@@ -26,7 +26,7 @@ Table user_holding [note: '사용자 주식 보유 현황'] {
   created_at timestamp
 }
 
-Table stock_order [note: '주문 관리'] {
+Table trade_order [note: '주문 관리'] {
   order_id bigint [primary key, note: '주문 ID']
   account_id bigint [note: '계좌 ID', not null]
   symbol varchar [note: '종목 코드', not null]

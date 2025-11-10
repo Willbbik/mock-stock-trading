@@ -1,4 +1,4 @@
-package com.min.mockstock.domain.trade.model
+package com.min.mockstock.domain.shared
 
 object Stocks {
 
@@ -35,5 +35,9 @@ object Stocks {
         StockInfo("KT", "030200"),
         StockInfo("한미반도체", "042700")
     )
+
+    fun isContain(stockCode: String): Boolean {
+        return list.any { it.stockCode == stockCode }
+    }
 
 }

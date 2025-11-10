@@ -3,5 +3,5 @@ package com.min.mockstock.domain.user.repository;
 import com.min.mockstock.domain.user.model.UserAccount
 import org.springframework.data.jpa.repository.JpaRepository
 
-interface UserAccountRepository : JpaRepository<UserAccount, Long> {
+interface UserAccountRepository : JpaRepository<UserAccount, String> {
 }
