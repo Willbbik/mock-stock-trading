@@ -2,7 +2,8 @@ package com.min.mockstock.user
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.min.mockstock.api.controller.AuthController
-import com.min.mockstock.domain.user.dto.RegisterUserDTO
+import com.min.mockstock.api.dto.request.auth.SignupRequest
+import com.min.mockstock.application.command.AuthCommandService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
@@ -19,12 +20,12 @@ class AuthControllerTest {
     private var objectMapper: ObjectMapper = ObjectMapper()
 
     @MockitoBean
-    private lateinit var authService: AuthService
+    private lateinit var authService: AuthCommandService
 
     @Autowired
     private lateinit var mockMvc: MockMvc
 
-    fun request(dto: RegisterUserDTO): ResultActions {
+    fun request(dto: SignupRequest): ResultActions {
         return mockMvc.perform(
                 post("/api/user/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -35,7 +36,7 @@ class AuthControllerTest {
     @Test
     fun `누락된 파라미터가 있는지 체크`() {
         // Given
-        val dto = RegisterUserDTO (
+        val dto = SignupRequest (
                 loginId = "testUser",
                 password = "",
                 name = "Test User",
@@ -50,7 +51,7 @@ class AuthControllerTest {
     @Test
     fun `정상 회원가입`() {
         // Given
-        val dto = RegisterUserDTO (
+        val dto = SignupRequest (
                 loginId = "testUser",
                 password = "temppassword",
                 name = "TestUser",
