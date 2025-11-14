@@ -79,8 +79,7 @@ class KoreaTradeStockScheduler(
     }
 
     private suspend fun fetchStock(stock: String): String {
-        val url =
-            "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-price?FID_COND_MRKT_DIV_CODE=J&FID_INPUT_ISCD=$stock"
+        val url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-price?FID_COND_MRKT_DIV_CODE=J&FID_INPUT_ISCD=$stock"
         val token = getAuthToken()
         val request = Request.Builder()
             .url(url)
