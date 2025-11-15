@@ -27,15 +27,14 @@ const ListCoin = () => {
                   ? { ...m, price: newPrice } // 해당 객체만 교체
                   : m
             ));
-
-
-        // setStocks(prevStocks =>
-        //     m.stockCode === stockCode
-        //       ? { ...m, price: newPrice } // 해당 객체만 교체
-        //       : m
-        //   );
     };
 
+    const showStockChart = (stock) => {
+        console.log(stock);
+    }
+
+
+    
     useEffect(() => {
         getStocks()
 
@@ -46,11 +45,7 @@ const ListCoin = () => {
                 client.subscribe('/topic/test01', message => {
                     const body = JSON.parse(message.body);
                     const { stockCode, data } = body;
-                // console.log(stockCode, prdatice, body);
                     updateStock(stockCode, data.price);
-
-                    // const data = JSON.parse(JSON.parse(message.body)); 
-                    // updateStock(data.code, data.price)
                 });
                 // client.publish({ destination: '/topic/test01', body: 'First Message' });
               },
@@ -69,47 +64,30 @@ const ListCoin = () => {
                 <table className="market-container__table">
                     <thead>
                         <tr>
-                            <th>한글명</th>
+                            <th>주식명</th>
                             <th>현재가</th>
-                            <th>전일대비</th>
+                            <th>등락률</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
                             stocks?.map((stock) => (
                                 <tr key={stock.stockCode}>
-                                    <td className="market-btn">
+                                    <td>
                                         <a 
                                             href="#"
                                             onClick={(e) => {
                                             e.preventDefault();
-                                            showCoinDetail(market)}}
+                                            showStockChart(stock)}}
                                         >
-                                            {market.market}</a>
+                                            {stock.name}
+                                        </a>
                                     </td>
-                                    <td>{stock.name}</td>
                                     <td>{stock.price}</td>
+                                    <td>temp</td>
                                 </tr>
                             ))
                         }
-
-                        {/* {
-                            markets?.map((market) => (
-                                <tr key={market.market}>
-                                    <td className="market-btn">
-                                        <a 
-                                            href="#"
-                                            onClick={(e) => {
-                                            e.preventDefault();
-                                            showCoinDetail(market)}}
-                                        >
-                                            {market.market}</a>
-                                    </td>
-                                    <td>{market.tradePrice}</td>
-                                    <td>{market.changePrice}</td>
-                                </tr>
-                            ))
-                        } */}
                     </tbody>
                 </table>
             </div>
