@@ -12,22 +12,36 @@ spring:
       host: localhost
       port: 6379
       ttl: 60 # minutes
-
+  jackson:
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: false
   kafka:
     bootstrap-servers: localhost:9092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
     consumer:
       group-id: market-group
       auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+logging:
+  level:
+    root: info                # 전체는 info
+    org.hibernate: error       # Hibernate 내부 error만 표시
+    org.springframework.orm.jpa: error
 
 korea-trade-open-api:
-  app-key: a
-  app-secret: a
+  real-app-key: a
+  real-app-secret: a
   real-domain: https://openapi.koreainvestment.com:9443
-  real-websocket-domain: ws://ops.koreainvestment.com:21000
+  real-websocket-domain: ws://ops.koreainvestment.com:21000/tryitout/H0STCNT0
   mock-domain: https://openapivts.koreainvestment.com:29443
-  mock-websocket-domain: ws://ops.koreainvestment.com:31000
+  mock-websocket-domain: ws://ops.koreainvestment.com:31000/tryitout/H0STCNT0
+  mock-app-key: b
+  mock-app-secret: b
+
+user-account:
+  default-balance: 10000000 # 초기 자본금 1,000만원

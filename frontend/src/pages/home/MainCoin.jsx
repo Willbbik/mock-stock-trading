@@ -1,23 +1,22 @@
-
-import useCoinStore from '../../utils/store';
+import useStockStore from '../../utils/store';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import api from '@api/api';
 const MainCoin = () => {
 
-    const { market, price, setMarket, setPrice } = useCoinStore();
+    const { stockCode, price, setStockCode, setPrice } = useStockStore();
     const [quantity, setQuantity] = useState(0)
     const [top3Coins, setTop3Coins] = useState([])
 
-    const buyCoin = async () => {
+    const buyStock = async () => {
         const body = {
-            market: market,
+            stockCode: stockCode,
             buyPrice: price,
             buyQuantity: quantity
         }
 
         try {
-            const response = await api.post("/api/coin/buy", body);
+            const response = await api.post("/api/stocks/buy", body);
 
             if(response.status === 200 && response.data === "success") {
                 alert("매수가 완료되었습니다.");
@@ -57,7 +56,7 @@ const MainCoin = () => {
     return (
         <section className="chart-container">
             <div className="chart-container__chart">
-                {market} 차트 영역
+                {/* {market} 차트 영역
                 <div>
                     <div>인기 코인 순위</div>
                     <div>
@@ -71,7 +70,7 @@ const MainCoin = () => {
                             }
                         </ul>
                     </div>
-                </div>
+                </div> */}
             </div>
             <div className="chart-container__trade">
                 <ul className="tab-box">

@@ -3,11 +3,11 @@ import { Client } from "@stomp/stompjs";
 import { useState } from "react";
 import { useEffect } from "react";
 import SockJS from 'sockjs-client/dist/sockjs';
-import useCoinStore from '../../utils/store';
+import useStockStore from '../../utils/store';
 
 const ListCoin = () => {
 
-    const { market, price, setMarket, setPrice } = useCoinStore();
+    const { stockCode, price, setStockCode, setPrice, setStockInfo } = useStockStore();
     const [stocks, setStocks] = useState([])
 
     // 주식 목록 조회
@@ -30,9 +30,8 @@ const ListCoin = () => {
     };
 
     const showStockChart = (stock) => {
-        console.log(stock);
+        setStockInfo(stock.stockCode, stock.price);
     }
-
 
     
     useEffect(() => {

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.min.mockstock.common.kafka.KafkaTopic
 import com.min.mockstock.domain.shared.StockInfo
 import com.min.mockstock.domain.shared.Stocks
-import com.min.mockstock.infra.koreatrade.dto.StockPriceResponse
 import com.min.mockstock.infra.properties.KoreaTradeProperties
 import jakarta.annotation.PostConstruct
 import jakarta.annotation.PreDestroy
@@ -32,22 +31,22 @@ class KoreaTradeStockScheduler(
 
     private val logger = LoggerFactory.getLogger(this::class.java)
     private val client = OkHttpClient()
-    private val objectMapper = ObjectMapper()
-        .registerKotlinModule()
-        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val stocks: List<StockInfo> = Stocks.list
     private val tokenMutex = Mutex() // 토큰 갱신용 락
+    private val objectMapper = ObjectMapper()
+        .registerKotlinModule()
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
     @PostConstruct
     fun onStart() {
-        println("✅ 서버 시작 - 주식 시세 스케줄러 실행")
+        logger.info("✅ 서버 시작 - 주식 시세 스케줄러 실행")
         start()
     }
 
     @PreDestroy
     fun onStop() {
-        println("🛑 서버 종료 - 스케줄러 중단")
+        logger.info("🛑 서버 종료 - 스케줄러 중단")
         stop()
     }
 
@@ -56,11 +55,11 @@ class KoreaTradeStockScheduler(
             while (isActive) {
                 try {
                     stocks.chunked(20).forEachIndexed { idx, batch ->
-                        println("🚀 [Batch ${idx + 1}] ${batch.size}개 종목 조회 시작")
+                        logger.info("🚀 [Batch ${idx + 1}] ${batch.size}개 종목 조회 시작")
 
                         batch.map { stock ->
                             async {
-                                val json = fetchStock(stock.stockCode)
+                                fetchStock(stock.stockCode)
                             }
                         }.awaitAll()
 
@@ -117,8 +116,7 @@ class KoreaTradeStockScheduler(
     private fun sendStockData(stockCode: String, json: String) {
 
         try {
-            val result = objectMapper.readValue<StockPriceResponse>(json, StockPriceResponse::class.java)
-            kafkaTemplate.send(KafkaTopic.KOREA_TRADE_STOCK_PRICE, stockCode, result.output?.stockPresentPrice)
+            kafkaTemplate.send(KafkaTopic.KOREA_TRADE_STOCK_PRICE, stockCode, json)
         } catch (e: Exception) {
             logger.debug("Error parsing stock data for $stockCode: ${e.message}")
             return

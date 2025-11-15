@@ -1,11 +1,12 @@
 import { create } from 'zustand'
 
-const useCoinStore = create((set) => ({
-  market: "",
+const useStockStore = create((set) => ({
+  stockCode: "",
   price: 0,
 
-  setMarket: (market) => set({ market }),
-  setPrice: (price) => set({ price })
+  setStockCode: (stockCode) => set({ stockCode }),
+  setPrice: (price) => set({ price }),
+  setStockInfo: (stockCode, price) => set({ stockCode, price })
 }))
 
-export default useCoinStore
+export default useStockStore

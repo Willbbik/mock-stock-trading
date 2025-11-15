@@ -17,7 +17,7 @@ class StockQueryService(
             StockInfo(
                 name = it.name,
                 stockCode = it.stockCode,
-                price = price ?: "0"
+                price = price?.toInt() ?: 0
             )
         }
 

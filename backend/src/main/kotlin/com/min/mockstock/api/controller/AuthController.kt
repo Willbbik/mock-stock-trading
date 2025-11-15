@@ -23,12 +23,12 @@ class AuthController(
     }
 
 
-    @PostMapping("/api/user/login", name = "로그인")
-    fun login(@RequestBody dto: LoginRequest, session: HttpSession): ResponseEntity<Void> {
-        val user = authCommandService.login(dto)
-        session.setAttribute("login_user", user.loginId)
-
-        return ResponseEntity.ok().build()
-    }
+//    @PostMapping("/api/user/signin", name = "로그인")
+//    fun login(@RequestBody dto: LoginRequest, session: HttpSession): ResponseEntity<Void> {
+//        val user = authCommandService.login(dto)
+//        session.setAttribute("login_user", user.loginId)
+//
+//        return ResponseEntity.ok().build()
+//    }
 
 }
